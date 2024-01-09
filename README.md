@@ -1,3 +1,5 @@
+## Note
+
 ### Linux CMD
 
 ```bash
