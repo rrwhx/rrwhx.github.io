@@ -257,6 +257,25 @@ echo ':x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00
 x11vnc -display :1 -forever -repeat -rfbauth /home/lxy/.vnc/passwd -rfbport 5900 -geometry 1920x1080 -noxdamage
 gcovr --exclude-directories build/tests --exclude-directories build/subprojects --exclude-directories build/libqemuutil.a.p --exclude-throw-branches --html-details > ~/gcov.html
 "ccls.misc.compilationDatabaseDirectory": "${workspaceFolder}/build"
+
+# -1 - Not paranoid at all
+#  0 - Disallow raw tracepoint access for unpriv
+#  1 - Disallow cpu events for unpriv
+#  2 - Disallow kernel profiling for unpriv
+
+sudo sh -c 'echo 1 >/proc/sys/kernel/perf_event_paranoid'
+
+cat /etc/sysctl.d/99-lixinyu.conf
+kernel.perf_event_paranoid=1
+kernel.kptr_restrict=1
+
+
+sed -i -e '/__MD5__/,+5000d'  your.cfg
+
+cat .tmux.conf
+set -g mouse on
+bind-key -n C-t new-window
+
 ```
 
 ### SPEC CPU
