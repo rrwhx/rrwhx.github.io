@@ -141,6 +141,7 @@ git config --global credential.helper store
 
 - **QEMU**
 从[这里debian](https://cloud.debian.org/images/cloud/bullseye/)和[这里ubuntu-riscv](https://ubuntu.com/download/risc-v)还有[这里ubuntu-server](https://cloud-images.ubuntu.com/)下载各种安装好的镜像
+
 ```bash
 # setup vfio
 echo 1 > /sys/bus/pci/devices/0000\:01\:00.0/remove
@@ -160,7 +161,9 @@ echo 144d a80a > /sys/bus/pci/drivers/vfio-pci/new_id
 #echo 144d a80a > /sys/bus/pci/drivers/vfio-pci/new_id
 #echo 10de 1c02 > /sys/bus/pci/drivers/vfio-pci/new_id
 #echo 10de 10f1 > /sys/bus/pci/drivers/vfio-pci/new_id
+```
 
+```bash
 # use vfio
 qemu-system-x86_64 -M q35 -cpu host,-hypervisor,vmx=on -smp 4,sockets=1,cores=4 --enable-kvm -m 8g \
     -device vfio-pci,host=05:00.0,bootindex=1 \
@@ -177,6 +180,9 @@ qemu-system-x86_64 -m 4g \
     -net user,hostfwd=tcp::10022-:22 -net nic,model=virtio-net-pci --nographic \
     "$@"
 
+```
+
+```bash
 # run aarch64 os
 # sudo apt install qemu-efi qemu-efi-aarch64
 # dd if=/usr/share/qemu-efi-aarch64/QEMU_EFI.fd of=flash0.img conv=notrunc
