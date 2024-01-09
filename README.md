@@ -52,7 +52,7 @@ sudo apt-get install libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev liblzo
 sudo apt-get install valgrind xfslibs-dev
 ```
 
-- **OpenBLAS\*\*
+- **OpenBLAS**
 
 ```bash
 git clone https://github.com/OpenMathLib/OpenBLAS
@@ -60,7 +60,7 @@ make -j`nproc`
 cd benchmark && make goto CFLAGS="-static -m32" -j12 LIBNAME='libopenblas_nehalemp-r0.3.19.dev.a'
 ```
 
-- **spinalhdl\*\*
+- **spinalhdl**
 
 ```bash
 apt-get install openjdk-8-jdk -y
@@ -76,7 +76,7 @@ apt-get install sbt
 
 ```
 
-- **verilator\*\*
+- **verilator**
 
 ```bash
 apt-get update
@@ -93,7 +93,7 @@ make -j8
 make install
 ```
 
-- **champsim\*\*
+- **champsim**
 
 ```bash
 sudo apt install libfmt-devi nlohmann-json3-dev libcli11-dev
@@ -102,7 +102,7 @@ make -j`nproc`
 bin/champsim --warmup_instructions 10 --simulation_instructions 5000000 ~/qemu_plugins/aarch64_coreamrk_10000000_champsim.trace.xz
 ```
 
-- **softfloat musl\*\*
+- **softfloat musl**
 
 ```bash
 ./configure CFLAGS="-msoft-float" --disable-shared
@@ -142,7 +142,7 @@ find . | cpio -o -H newc | gzip -9 > ~/la_busybox_musl_softfloat.cpio.gz
 ```
 
 ### Softwares Usage
-- **git\*\*
+- **git**
 
 ```bash
 git config --global user.name "your name"
@@ -220,7 +220,7 @@ systemctl start ssh.service
 
 ```
 
-- **qemu-nbd\*\*
+- **qemu-nbd**
 
 ```bash
 mkdir /ubuntu16s
@@ -241,7 +241,7 @@ sudo nbd-client 10.90.50.93 20000 /dev/nbd8
 sudo mount /dev/nbd8p2 /debian11_i386/
 ```
 
-- **binfmt\*\*
+- **binfmt**
 
 ```bash
 mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
@@ -251,7 +251,7 @@ echo -1 > /proc/sys/fs/binfmt_misc/x86_64
 echo ':x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/latx-x86_64:C' > /proc/sys/fs/binfmt_misc/register
 ```
 
-- **misc\*\*
+- **misc**
 
 ```bash
 x11vnc -display :1 -forever -repeat -rfbauth /home/lxy/.vnc/passwd -rfbport 5900 -geometry 1920x1080 -noxdamage
@@ -261,7 +261,7 @@ gcovr --exclude-directories build/tests --exclude-directories build/subprojects 
 
 ### SPEC CPU
 
-- **compile spec cpu statically on macos\*\*
+- **compile spec cpu statically on macos**
 
 ```bash
 -static-libgcc
