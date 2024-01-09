@@ -255,6 +255,7 @@ rename libquadmath.dylib
 ```
 
 ### misc
+
 | software    | dependencies|
 | ----------- | ----------- |
 | xconfig      | libqt5xmlpatterns5-dev       |
