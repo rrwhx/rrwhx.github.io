@@ -35,6 +35,7 @@ update-grub
 ```
 
 - **kernel**
+
 ```bash
 # edit /etc/default/grub
 
@@ -45,6 +46,7 @@ update-grub
 ```
 
 - **vim**
+
 ```vimrc
 set number
 set ts=4 sw=4
