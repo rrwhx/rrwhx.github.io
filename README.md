@@ -205,6 +205,8 @@ git config --global credential.helper store
 - **QEMU**
 从[这里debian](https://cloud.debian.org/images/cloud/bullseye/)和[这里ubuntu-riscv](https://ubuntu.com/download/risc-v)还有[这里ubuntu-server](https://cloud-images.ubuntu.com/)下载各种安装好的镜像
 
+
+[vfio-pci-bind](https://github.com/andre-richter/vfio-pci-bind/)
 ```bash
 # setup vfio
 echo 1 > /sys/bus/pci/devices/0000\:01\:00.0/remove
