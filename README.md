@@ -37,26 +37,6 @@ update-grub
 - **kernel**
 
 ```bash
-# edit /etc/default/grub
-
-GRUB_DISABLE_SUBMENU=y
-
-update-grub
-
-```
-
-- **vim**
-
-```vimrc
-set number
-set ts=4 sw=4
-set expandtab
-```
-
-### Softwares Build
-- **kernel**
-
-```bash
 intel_iommu=on iommu=pt nouveau.blacklist=1 radeon.blacklist=1 vfio-pci.ids=10de:1c02,10de:10f1
 
 # disable alsr randmaps
@@ -76,6 +56,29 @@ earlycon=uart,0x1fe001e0,115200
 
 
 ```
+
+- **vim**
+
+```vimrc
+set number
+set ts=4 sw=4
+set expandtab
+```
+
+### Softwares Build
+- **kernel**
+
+```bash
+apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+make defconfig
+# ./scripts/config --disable SYSTEM_TRUSTED_KEYS
+# ./scripts/config --disable SYSTEM_REVOCATION_KEYS
+make modules_install INSTALL_MOD_STRIP=1
+make install
+update-initramfs -k 4.19.190-4k+ -c
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 
 - **gcc**
 
