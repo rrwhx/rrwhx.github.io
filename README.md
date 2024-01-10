@@ -1,6 +1,6 @@
 ## Note
 
-### Linux CMD
+### Linux
 
 ```bash
 sed -i 's@//.*ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
@@ -13,16 +13,65 @@ sudo apt-get install vim git tig gcc g++ gfortran remake make cmake cpuid time o
 
 ```
 
+- **grub**
+
+    [here](https://askubuntu.com/questions/575651/what-is-the-difference-between-grub-cmdline-linux-and-grub-cmdline-linux-default)
+
+  - **GRUB_CMDLINE_LINUX** are always effective
+
+  - **GRUB_CMDLINE_LINUX_DEFAULT** are effective ONLY during normal boot (NOT during recovery mode)
+
+```bash
+# edit /etc/default/grub
+
+GRUB_DISABLE_SUBMENU=y
+
+GRUB_SAVEDEFAULT=true
+GRUB_DEFAULT=saved
+
+update-grub
+
+
+```
+
+- **kernel**
+```bash
+# edit /etc/default/grub
+
+GRUB_DISABLE_SUBMENU=y
+
+update-grub
+
+```
+
+- **vim**
+```vimrc
+set number
+set ts=4 sw=4
+set expandtab
+```
+
 ### Softwares Build
 - **kernel**
 
 ```bash
-apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
-make modules_install INSTALL_MOD_STRIP=1
-make install
+intel_iommu=on iommu=pt nouveau.blacklist=1 radeon.blacklist=1 vfio-pci.ids=10de:1c02,10de:10f1
 
-update-initramfs -k 4.19.190-4k+ -c
-grub-mkconfig -o /boot/grub/grub.cfg
+# disable alsr randmaps
+nokaslr norandmaps
+
+# init cmd, rdinit
+init=/bin/bash -- -c \"poweroff -f\"
+
+# console
+console=ttyS0,115200
+
+# earlyprintk
+earlyprintk=ttyS0,115200
+
+# la
+earlycon=uart,0x1fe001e0,115200
+
 
 ```
 
@@ -287,6 +336,8 @@ bind-key -n C-t new-window
 -static-libstdc++ -static-libgfortran are not needed
 rename libquadmath.dylib
 ```
+
+- 447.dealII **HAVE_STD_NUMERIC_LIMITS**, `long double`
 
 ### misc
 
