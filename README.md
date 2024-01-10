@@ -288,6 +288,7 @@ mount --rbind /dev dev/
 ```
 
 - **qemu-nbd** network
+
 ```bash
 qemu-nbd -v -p 20000 ./debian11_i386.qcow2 -s
 client:
