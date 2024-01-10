@@ -363,3 +363,8 @@ echo 'net.ipv4.ping_group_range = 0 2147483647' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
+- fedora port?
+```bash
+systemctl status firewalld
+```
+
