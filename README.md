@@ -46,6 +46,8 @@ intel_iommu=on iommu=pt nouveau.blacklist=1 radeon.blacklist=1 vfio-pci.ids=10de
 # disable alsr randmaps
 nokaslr norandmaps
 
+mitigations=off
+
 # init cmd, rdinit
 init=/bin/bash -- -c \"poweroff -f\"
 
@@ -58,7 +60,50 @@ earlyprintk=ttyS0,115200
 # la
 earlycon=uart,0x1fe001e0,115200
 
+```
 
+-- **busybox**
+
+`make defconfig`
+
+`Build Options` -> `static binary (no shared libs)`
+
+`make -j`nproc` && make install`
+
+`cd _install && find . | cpio -o -H newc > ~/initrd.cpio`
+
+
+- **init**
+
+```sh
+#!/bin/sh
+
+mknod -m 622 /dev/console c 5 1
+mknod -m 622 /dev/tty0 c 4 0
+
+echo "Loading, please wait..."
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+[ -d /dev ] || mkdir -m 0755 /dev
+[ -d /root ] || mkdir --mode=0700 /root
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
+[ -d /mnt ] || mkdir /mnt
+
+
+
+mount -t devtmpfs none /dev
+mount -t proc /proc /proc
+mount -t sysfs none /sys
+echo "Hello world"
+ls /dev/
+ls /proc/
+ls /sys/
+setsid cttyhack /bin/ash --login
+# poweroff -f
+# exec /bin/ash --login
 ```
 
 - **vim**
@@ -75,6 +120,9 @@ set expandtab
 ```bash
 apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
 make defconfig
+# if building an older kernel use 'make kvmconfig" instead if below command fails
+# make kvm_guest.config
+# make -j`nproc` bzImage or vmlinux
 # ./scripts/config --disable SYSTEM_TRUSTED_KEYS
 # ./scripts/config --disable SYSTEM_REVOCATION_KEYS
 make modules_install INSTALL_MOD_STRIP=1
