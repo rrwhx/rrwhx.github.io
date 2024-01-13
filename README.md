@@ -64,14 +64,18 @@ earlycon=uart,0x1fe001e0,115200
 
 -- **busybox**
 
-`make defconfig`
+```bash
+make defconfig
+# Build Options -> static binary (no shared libs)
+make -j `nproc` && make install
+cd _install && find . | cpio -o -H newc > ~/initrd.cpio
+```
 
-`Build Options` -> `static binary (no shared libs)`
-
-`make -j`nproc` && make install`
-
-`cd _install && find . | cpio -o -H newc > ~/initrd.cpio`
-
+```bash
+mkdir -p dev && cd dev
+sudo mknod -m 622 console c 5 1
+sudo mknod -m 622 tty0 c 4 0
+```
 
 - **init**
 
@@ -257,7 +261,21 @@ git config --global user.email "your mail"
 git config --global credential.helper store
 ```
 
-- **QEMU**
+#### QEMU
+
+run simple kernel
+
+```sh
+#!/bin/sh
+
+qemu-system-x86_64 --enable-kvm -m 1g \
+    --nographic -kernel \
+    ~/kernel/linux/build_x86_64/vmlinux \
+    -initrd ~/initrd.cpio \
+    -append "console=ttyS0 nokaslr norandmaps clocksource=tsc mitigations=off loglevel=7 rdinit=/init" \
+    "$@"
+```
+
 从[这里debian](https://cloud.debian.org/images/cloud/bullseye/)和[这里ubuntu-riscv](https://ubuntu.com/download/risc-v)还有[这里ubuntu-server](https://cloud-images.ubuntu.com/)下载各种安装好的镜像
 
 
