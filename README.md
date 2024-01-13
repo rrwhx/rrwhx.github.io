@@ -1,6 +1,6 @@
-## Note
+# Note
 
-### Linux
+#### Linux
 
 ```bash
 sed -i 's@//.*ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
@@ -17,7 +17,7 @@ sudo apt-get install vim git tig gcc g++ gfortran remake make cmake cpuid time o
 
 ```
 
-- **grub**
+#### grub
 
     [here](https://askubuntu.com/questions/575651/what-is-the-difference-between-grub-cmdline-linux-and-grub-cmdline-linux-default)
 
@@ -38,7 +38,7 @@ update-grub
 
 ```
 
-- **kernel**
+#### kernel
 
 ```bash
 intel_iommu=on iommu=pt nouveau.blacklist=1 radeon.blacklist=1 vfio-pci.ids=10de:1c02,10de:10f1
@@ -62,7 +62,32 @@ earlycon=uart,0x1fe001e0,115200
 
 ```
 
--- **busybox**
+- **vim**
+
+```vimrc
+set number
+set ts=4 sw=4
+set expandtab
+```
+
+## Softwares Build
+#### kernel
+
+```bash
+apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
+make defconfig
+# if building an older kernel use 'make kvmconfig" instead if below command fails
+# make kvm_guest.config
+# make -j`nproc` bzImage or vmlinux
+# ./scripts/config --disable SYSTEM_TRUSTED_KEYS
+# ./scripts/config --disable SYSTEM_REVOCATION_KEYS
+make modules_install INSTALL_MOD_STRIP=1
+make install
+update-initramfs -k 4.19.190-4k+ -c
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+#### busybox
 
 ```bash
 make defconfig
@@ -110,39 +135,13 @@ setsid cttyhack /bin/ash --login
 # exec /bin/ash --login
 ```
 
-- **vim**
-
-```vimrc
-set number
-set ts=4 sw=4
-set expandtab
-```
-
-### Softwares Build
-- **kernel**
-
-```bash
-apt-get install git fakeroot build-essential ncurses-dev xz-utils libssl-dev bc flex libelf-dev bison
-make defconfig
-# if building an older kernel use 'make kvmconfig" instead if below command fails
-# make kvm_guest.config
-# make -j`nproc` bzImage or vmlinux
-# ./scripts/config --disable SYSTEM_TRUSTED_KEYS
-# ./scripts/config --disable SYSTEM_REVOCATION_KEYS
-make modules_install INSTALL_MOD_STRIP=1
-make install
-update-initramfs -k 4.19.190-4k+ -c
-grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-
-- **gcc**
+#### gcc
 
 ```bash
 ../gcc/configure --enable-languages=c,c++,fortran --disable-bootstrap --prefix=/opt/gcc-latest/
 ```
 
-- **qemu**
+#### qemu
 
   - 参考 [Hosts/Linux](https://wiki.qemu.org/Hosts/Linux) 和 `tests/docker/dockerfiles/ubuntu2204.docker`
 
@@ -162,7 +161,7 @@ sudo apt-get install libvde-dev libvdeplug-dev libvte-2.90-dev libxen-dev liblzo
 sudo apt-get install valgrind xfslibs-dev
 ```
 
-- **OpenBLAS**
+#### OpenBLAS
 
 ```bash
 git clone https://github.com/OpenMathLib/OpenBLAS
@@ -170,7 +169,7 @@ make -j`nproc`
 cd benchmark && make goto CFLAGS="-static -m32" -j12 LIBNAME='libopenblas_nehalemp-r0.3.19.dev.a'
 ```
 
-- **spinalhdl**
+#### spinalhdl
 
 ```bash
 apt-get install openjdk-8-jdk -y
@@ -186,7 +185,7 @@ apt-get install sbt
 
 ```
 
-- **verilator**
+#### verilator
 
 ```bash
 apt-get update
@@ -203,7 +202,7 @@ make -j8
 make install
 ```
 
-- **champsim**
+#### champsim
 
 ```bash
 sudo apt install libfmt-devi nlohmann-json3-dev libcli11-dev
@@ -212,7 +211,7 @@ make -j`nproc`
 bin/champsim --warmup_instructions 10 --simulation_instructions 5000000 ~/qemu_plugins/aarch64_coreamrk_10000000_champsim.trace.xz
 ```
 
-- **softfloat musl**
+#### softfloat musl
 
 ```bash
 ./configure CFLAGS="-msoft-float" --disable-shared
@@ -221,7 +220,7 @@ make install
 // shared会有问题
 ```
 
-- **busybox** with softfloat musl
+####  **busybox** with softfloat musl
 
 ```bash
 #!/bin/bash
@@ -252,8 +251,8 @@ find . | cpio -o -H newc > ~/la_busybox_musl_softfloat.cpio
 find . | cpio -o -H newc | gzip -9 > ~/la_busybox_musl_softfloat.cpio.gz
 ```
 
-### Softwares Usage
-- **git**
+## Softwares Usage
+#### git
 
 ```bash
 git config --global user.name "your name"
@@ -347,7 +346,7 @@ systemctl start ssh.service
 
 ```
 
-- **qemu-nbd**
+#### qemu-nbd
 
 ```bash
 mkdir /ubuntu16s
@@ -360,7 +359,7 @@ mount --rbind /sys sys/
 mount --rbind /dev dev/
 ```
 
-- **qemu-nbd** network
+####  **qemu-nbd** network
 
 ```bash
 qemu-nbd -v -p 20000 ./debian11_i386.qcow2 -s
@@ -369,7 +368,7 @@ sudo nbd-client 10.90.50.93 20000 /dev/nbd8
 sudo mount /dev/nbd8p2 /debian11_i386/
 ```
 
-- **binfmt**
+#### binfmt
 
 ```bash
 mount binfmt_misc -t binfmt_misc /proc/sys/fs/binfmt_misc
@@ -379,7 +378,7 @@ echo -1 > /proc/sys/fs/binfmt_misc/x86_64
 echo ':x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/latx-x86_64:C' > /proc/sys/fs/binfmt_misc/register
 ```
 
-- **misc**
+#### misc
 
 ```bash
 x11vnc -display :1 -forever -repeat -rfbauth /home/lxy/.vnc/passwd -rfbport 5900 -geometry 1920x1080 -noxdamage
@@ -408,7 +407,7 @@ bind-key -n C-t new-window
 
 ### SPEC CPU
 
-- **compile spec cpu statically on macos**
+#### compile spec cpu statically on macos
 
 ```bash
 -static-libgcc
@@ -443,13 +442,13 @@ suffix
 
 ### FAQ
 
-- qemu-system has network, but ping not work?
+#### qemu-system has network, but ping not work?
 ```bash
 echo 'net.ipv4.ping_group_range = 0 2147483647' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-- fedora port?
+####  fedora port?
 ```bash
 systemctl status firewalld
 ```
