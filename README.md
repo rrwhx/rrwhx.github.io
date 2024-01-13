@@ -19,7 +19,7 @@ sudo apt-get install vim git tig gcc g++ gfortran remake make cmake cpuid time o
 
 #### grub
 
-    [here](https://askubuntu.com/questions/575651/what-is-the-difference-between-grub-cmdline-linux-and-grub-cmdline-linux-default)
+[here](https://askubuntu.com/questions/575651/what-is-the-difference-between-grub-cmdline-linux-and-grub-cmdline-linux-default)
 
   - **GRUB_CMDLINE_LINUX** are always effective
 
