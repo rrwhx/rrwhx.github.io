@@ -91,16 +91,69 @@ grub-mkconfig -o /boot/grub/grub.cfg
 #### busybox
 
 ```bash
+#!/bin/sh
 make defconfig
 # Build Options -> static binary (no shared libs)
+sed -i "s/# CONFIG_STATIC is not set/CONFIG_STATIC=y/g" .config
 make -j `nproc` && make install
-cd _install && find . | cpio -o -H newc > ~/initrd.cpio
+cd _install
+mkdir -p {bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys,usr/share/udhcpc}
+cp ../examples/udhcp/simple.script usr/share/udhcpc/default.script
+
+cat > init << EOF
+
+#!/bin/sh
+
+mknod -m 622 /dev/console c 5 1
+mknod -m 622 /dev/tty0 c 4 0
+
+echo "Loading, please wait..."
+
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+[ -d /dev ] || mkdir -m 0755 /dev
+[ -d /root ] || mkdir --mode=0700 /root
+[ -d /sys ] || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ] || mkdir /tmp
+[ -d /mnt ] || mkdir /mnt
+
+
+
+mount -t devtmpfs none /dev
+mount -t proc /proc /proc
+mount -t sysfs none /sys
+echo "Hello world"
+ls /dev/
+ls /proc/
+ls /sys/
+setsid cttyhack /bin/ash --login
+poweroff -f
+
+EOF
+
+chmod +x init
+
+find . | cpio -o -H newc > ~/initrd.cpio
 ```
 
 ```bash
 mkdir -p dev && cd dev
 sudo mknod -m 622 console c 5 1
 sudo mknod -m 622 tty0 c 4 0
+```
+
+network
+
+```sh
+#!/bin/sh
+ip link set eth0 up
+# default script /usr/share/udhcpc/default.script
+udhcpc -i eth0
+
+#udhcpc -i eth0 -s /etc/udhcp/simple.script
+
+
 ```
 
 - **init**
@@ -132,7 +185,7 @@ ls /dev/
 ls /proc/
 ls /sys/
 setsid cttyhack /bin/ash --login
-# poweroff -f
+poweroff -f
 # exec /bin/ash --login
 ```
 
