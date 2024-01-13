@@ -90,7 +90,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 #### busybox
 
-```bash
+```sh
 #!/bin/sh
 make defconfig
 # Build Options -> static binary (no shared libs)
@@ -101,7 +101,6 @@ mkdir -p {bin,dev,etc,lib,lib64,mnt/root,proc,root,sbin,sys,usr/share/udhcpc}
 cp ../examples/udhcp/simple.script usr/share/udhcpc/default.script
 
 cat > init << EOF
-
 #!/bin/sh
 
 mknod -m 622 /dev/console c 5 1
@@ -132,9 +131,10 @@ poweroff -f
 
 EOF
 
-chmod +x init
+chmod 777 init
 
 find . | cpio -o -H newc > ~/initrd.cpio
+
 ```
 
 ```bash
