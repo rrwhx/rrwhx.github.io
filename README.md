@@ -12,8 +12,9 @@ sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/mirrors/debian-security
 sudo sed -i 's|security.debian.org/debian-security|mirrors.ustc.edu.cn/debian-security|g' /etc/apt/sources.list
 sudo useradd -G sudo -s /bin/bash -m lixinyu
 
+sudo apt-get install -y locales-all
 
-sudo apt-get install vim git tig gcc g++ gfortran remake make cmake cpuid time openssh-server openssh-client wget curl net-tools ninja-build libglib2.0-dev meson libpixman-1-dev fish qemu-system qemu-user net-tools nload htop atop iotop python3-pip ffmpeg  gcc-multilib g++-multilib gfortran-multilib
+sudo apt-get install -y vim git tig gcc g++ gfortran remake make cmake cpuid time openssh-server openssh-client wget curl net-tools ninja-build libglib2.0-dev meson libpixman-1-dev fish qemu-system qemu-user net-tools nload htop atop iotop python3-pip ffmpeg  gcc-multilib g++-multilib gfortran-multilib
 
 ```
 
