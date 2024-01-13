@@ -442,13 +442,13 @@ suffix
 
 ### FAQ
 
-#### qemu-system has network, but ping not work?
+#### QEMU system mode has network, but ping not work?
 ```bash
 echo 'net.ipv4.ping_group_range = 0 2147483647' | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p
 ```
 
-####  fedora port?
+#### Fedora port?
 ```bash
 systemctl status firewalld
 ```
