@@ -268,9 +268,9 @@ run simple kernel
 ```sh
 #!/bin/sh
 
-qemu-system-x86_64 --enable-kvm -m 1g \
-    --nographic -kernel \
-    ~/kernel/linux/build_x86_64/vmlinux \
+qemu-system-x86_64 -m 1g \
+    --nographic \
+    -kernel ~/kernel/linux/build_x86_64/vmlinux \
     -initrd ~/initrd.cpio \
     -append "console=ttyS0 nokaslr norandmaps clocksource=tsc mitigations=off loglevel=7 rdinit=/init" \
     "$@"
@@ -278,6 +278,8 @@ qemu-system-x86_64 --enable-kvm -m 1g \
 
 从[这里debian](https://cloud.debian.org/images/cloud/bullseye/)和[这里ubuntu-riscv](https://ubuntu.com/download/risc-v)还有[这里ubuntu-server](https://cloud-images.ubuntu.com/)下载各种安装好的镜像
 
+[QEMU 4.0 boots uncompressed Linux x86_64 kernel](https://stefano-garzarella.github.io/posts/2019-08-23-qemu-linux-kernel-pvh/)
+[qbios](https://github.com/bonzini/qboot)
 
 [vfio-pci-bind](https://github.com/andre-richter/vfio-pci-bind/)
 ```bash
