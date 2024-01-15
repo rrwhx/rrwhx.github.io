@@ -436,6 +436,10 @@ echo ':x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00
 
 #### 9pfs
 
+[Set up VirtFS (9p virtio) for sharing files between Guest and Host](https://gist.github.com/bingzhangdai/7cf8880c91d3e93f21e89f96ff67b24b)
+
+[Documentation/9psetup](https://wiki.qemu.org/Documentation/9psetup)
+
 qemu-cmd
 
 `-fsdev local,security_model=mapped,id=fsdev0,path=/your/path/ -device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare`
