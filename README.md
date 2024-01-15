@@ -321,11 +321,11 @@ run simple kernel
 ```sh
 #!/bin/sh
 
-qemu-system-x86_64 -m 1g \
+qemu-system-x86_64 -m 8g \
     --nographic \
-    -kernel ~/kernel/linux/build_x86_64/vmlinux \
-    -initrd ~/initrd.cpio \
-    -append "console=ttyS0 nokaslr norandmaps clocksource=tsc mitigations=off loglevel=7 rdinit=/init" \
+    -kernel ~/kernel_initrd/vmlinux_x64 \
+    -initrd ~/kernel_initrd/initrd_x64.cpio \
+    -append "earlyprintk=ttyS0,115200 console=ttyS0 nokaslr norandmaps clocksource=tsc mitigations=off loglevel=7 rdinit=/init" \
     "$@"
 ```
 
