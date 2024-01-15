@@ -434,6 +434,16 @@ echo -1 > /proc/sys/fs/binfmt_misc/x86_64
 echo ':x86_64:M::\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00:\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/latx-x86_64:C' > /proc/sys/fs/binfmt_misc/register
 ```
 
+#### 9pfs
+
+qemu-cmd
+
+`-fsdev local,security_model=mapped,id=fsdev0,path=/your/path/ -device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare`
+
+guest cmd
+
+`mount -t 9p -o trans=virtio hostshare [mount point] -oversion=9p2000.L`
+
 #### misc
 
 ```bash
