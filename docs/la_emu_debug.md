@@ -300,11 +300,11 @@ static void free_pages_check_bad(struct page *page)
 ```
 
 ```
-17   store pc:900000000053e960 va:fffffefffe0510b0,pa:15e0510b0
-18   changed : pc;900000000053e964, old:0, new:ffffffff
-19**   changed : pc;9000000000301174, old:ffffffff, new:ffffff7f
-20   store pc:9000000000300db4 va:fffffefffe0510b0,pa:15e0510b0
-21   changed : pc;9000000000300db8, old:ffffff7f, new:ffffffff
+     store pc:900000000053e960 va:fffffefffe0510b0,pa:15e0510b0
+     changed : pc;900000000053e964, old:0, new:ffffffff
+**   changed : pc;9000000000301174, old:ffffffff, new:ffffff7f
+     store pc:9000000000300db4 va:fffffefffe0510b0,pa:15e0510b0
+     changed : pc;9000000000300db8, old:ffffff7f, new:ffffffff
 ```
 
 ### 没有向该地址store， 值却发生了变化？？？
@@ -320,13 +320,13 @@ static void free_pages_check_bad(struct page *page)
 ```
 
 ```
-store pc:900000000053e960 va:fffffefffe0510b0,pa:15e0510b0
-ha store pc:900000000053e960 va:fffffefffe0510b0,pa:15e0510b0
+store     pc:900000000053e960  va:fffffefffe0510b0,pa:15e0510b0
+ha store  pc:900000000053e960  va:fffffefffe0510b0,pa:15e0510b0
 changed : pc;900000000053e964, old:0, new:ffffffff
-ha store pc:9000000000301170 va:fffffefffe0500b0,pa:15e0510b0
+ha store  pc:9000000000301170  va:fffffefffe0500b0,pa:15e0510b0
 changed : pc;9000000000301174, old:ffffffff, new:ffffff7f
-store pc:9000000000300db4 va:fffffefffe0510b0,pa:15e0510b0
-ha store pc:9000000000300db4 va:fffffefffe0510b0,pa:15e0510b0
+store     pc:9000000000300db4  va:fffffefffe0510b0,pa:15e0510b0
+ha store  pc:9000000000300db4  va:fffffefffe0510b0,pa:15e0510b0
 changed : pc;9000000000300db8, old:ffffff7f, new:ffffffff
 ```
 
@@ -338,6 +338,8 @@ changed : pc;9000000000300db8, old:ffffff7f, new:ffffffff
 
 
 
-
+## Tips
+### 先从开源软件开始测试，结合源代码逻辑调试翻译器/解释器，定位出错代码
+### 内存信息通过断点来确定续写行为，跟踪关键数据查找异常问题
 
 

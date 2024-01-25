@@ -168,3 +168,6 @@ Only use scripts/update-linux-headers.sh to update!
 
 使用的 头文件部匹配，需要重新生成头文件，`scripts/update-linux-headers.sh ~/linux-6.7`解决问题
 
+## Tips
+### 对运行过程了解，能够定位到一个小问题
+### 控制变量，替换参数或者环境
