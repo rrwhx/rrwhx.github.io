@@ -1,6 +1,6 @@
-## compile LATX for new world
+# Compile LATX for new world
 
-### error: `__NR_futex` undeclared
+## error: `__NR_futex` undeclared
 
 ```sh
 In file included from ../util/qemu-thread-posix.c:346:
@@ -26,7 +26,7 @@ In file included from ../util/qemu-thread-posix.c:346:
       |            ^~~~~~~~~~
 ```
 
-- compile command
+### compile command
 
 ```sh
 cc -Ilibqemuutil.a.p -I. -I.. -Iqapi -Itrace -Iui/shader -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/sysprof-4 \
@@ -39,7 +39,7 @@ cc -Ilibqemuutil.a.p -I. -I.. -Iqapi -Itrace -Iui/shader -I/usr/include/glib-2.0
     -c ../util/qemu-thread-posix.c
 ```
 
-- source code
+### source code
 
 ```c
 #include <sys/syscall.h>
@@ -53,7 +53,7 @@ static inline void qemu_futex_wake(void *f, int n)
 }
 ```
 
-- /usr/include/asm-generic/unistd.h
+### /usr/include/asm-generic/unistd.h
 
 ```c
 #if defined(__ARCH_WANT_TIME32_SYSCALLS) || __BITS_PER_LONG != 32
@@ -62,7 +62,7 @@ __SC_3264(__NR_futex, sys_futex_time32, sys_futex)
 #endif
 ```
 
-- /usr/include/asm-generic/bitsperlong.h
+### /usr/include/asm-generic/bitsperlong.h
 
 ```c
 #if defined(__CHAR_BIT__) && defined(__SIZEOF_LONG__)
@@ -88,7 +88,7 @@ __SC_3264(__NR_futex, sys_futex_time32, sys_futex)
 #define __SIZEOF_LONG__ 8
 ```
 
-- test_syscall.c
+###  test_syscall.c
 
 ```c
 #include <stdio.h>
@@ -113,9 +113,9 @@ __NR_futex : 98
 __BITS_PER_LONG : 64
 ```
 
-#### 控制变量
+## 控制变量
 
-1. 是不是源文件有问题？
+### 是不是源文件有问题？
 
 将要编译的文件换为 `test_syscall.c`
 
@@ -136,7 +136,7 @@ error: `__NR_futex` undeclared
 不是源文件的问题。
 
 
-2. 还有什么不一样的，编译选项？
+### 还有什么不一样的，编译选项？
 
 `-isystem /home/lxy/lat/linux-headers` 很可疑， 删掉。
 
@@ -154,7 +154,7 @@ cc -Ilibqemuutil.a.p -I. -I.. -Iqapi -Itrace -Iui/shader -I/usr/include/glib-2.0
 
 **ok**
 
-#### 找到问题
+## 找到问题
 
 ```sh
 > ls linux-headers/
