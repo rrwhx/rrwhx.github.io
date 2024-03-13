@@ -22,7 +22,7 @@ sudo apt-get install -y make ninja-build gcc pkg-config libglib2.0-dev git pytho
 
 3. 编译QEMU
 ```bash
-cd qemu && cd build
+cd qemu && mkdir build && cd build
 ../configure --target-list=loongarch64-linux-user
 ninja
 ./qemu-loongarch64 --version
@@ -38,7 +38,7 @@ ninja
 wget https://github.com/sunhaiyong1978/CLFS-for-LoongArch/releases/download/8.1/CLFS-loongarch64-8.1.1-x86_64-cross-tools-gcc-libc.tar.xz
 tar -xf CLFS-loongarch64-8.1.1-x86_64-cross-tools-gcc-libc.tar.xz
 ./cross-tools/bin/loongarch64-unknown-linux-gnu-gcc --version
-loongarch64-unknown-linux-gnu-gcc (GCC) 13.2.0
+# loongarch64-unknown-linux-gnu-gcc (GCC) 13.2.0
 # Copyright (C) 2023 Free Software Foundation, Inc.
 # This is free software; see the source for copying conditions.  There is NO
 # warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
