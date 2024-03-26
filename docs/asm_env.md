@@ -1,3 +1,7 @@
+---
+mainfont: Noto Sans Mono CJK TC
+---
+
 ## 搭建 LoongArch 汇编实验环境 (Linux)
 
 ### 编译安装qemu-loongarch64
