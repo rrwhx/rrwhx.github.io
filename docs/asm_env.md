@@ -83,7 +83,7 @@ helloworld:      .ascii "Hello LoongArch!\n"
 ### 编译测试
 
 ```bash
-./cross-tools/bin/loongarch64-unknown-linux-gnu-gcc -nostdlib -static hello_loongarch.S -o ./hello_loongarc
+./cross-tools/bin/loongarch64-unknown-linux-gnu-gcc -nostdlib -static hello_loongarch.S -o ./hello_loongarch
 ```
 
 ### 运行测试
