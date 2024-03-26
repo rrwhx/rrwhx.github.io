@@ -99,3 +99,33 @@ helloworld:      .ascii "Hello LoongArch!\n"
 * LoongArch ABI[https://loongson.github.io/LoongArch-Documentation/LoongArch-ELF-ABI-CN.html](https://loongson.github.io/LoongArch-Documentation/LoongArch-ELF-ABI-CN.html)
 * LoongArch 汇编参考[https://github.com/loongson/la-asm-manual/releases/download/draft/la-asm-manual.pdf](https://github.com/loongson/la-asm-manual/releases/download/draft/la-asm-manual.pdf)
 * QEMU[https://www.qemu.org/](https://www.qemu.org/)
+
+### 使用qemu和gdb调试longarch64程序
+
+1. 下载`loongarch64-linux-gnu-gdb` [https://github.com/rrwhx/qemu_bin/blob/main/loongarch64-linux-gnu-gdb](https://github.com/rrwhx/qemu_bin/blob/main/loongarch64-linux-gnu-gdb), 也可以自己从源码编译[https://www.gnu.org/software/binutils/](https://www.gnu.org/software/binutils/)
+
+2. 使用qemu运行loongarch64程序，加上`-g 1234`选项以在`1234`端口启动gdbserver
+```bash
+./qemu-8.2.2/build/qemu-loongarch64 -g 1234 ./hello_loongarch
+```
+
+3. 使用gdb调试, 运行`./loongarch64-linux-gnu-gdb ./hello_loongarch`开始调试，输入`target remote :1234`连接到gdbserver。
+
+   ![image](loongarch_gdb.png)
+
+
+| 命令               | 说明 |
+| --------          | ------- |
+| r                 |   开始运行  |
+| c                 | 继续运行     |
+| b  addr           | 设置断点    |
+| i registers       | 显示寄存器的值    |
+| x addr            | 显示内存的值    |
+| x/i addr          | 以指令方法显示内存的值    |
+| si                | 执行一条指令    |
+| print expression  | 打印表达式的值    |
+
+### gdb参考资料
+* GDB Cheat Sheet [https://bytes.usc.edu/cs104/wiki/gdb/](https://bytes.usc.edu/cs104/wiki/gdb/)
+* GDB Cheat Sheet [https://github.com/skywind3000/awesome-cheatsheets/blob/master/tools/gdb.txt](https://github.com/skywind3000/awesome-cheatsheets/blob/master/tools/gdb.txt)
+* 详细的参考[https://visualgdb.com/gdbreference/commands/](https://visualgdb.com/gdbreference/commands/)
