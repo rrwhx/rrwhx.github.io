@@ -100,7 +100,7 @@ helloworld:      .ascii "Hello LoongArch!\n"
 * LoongArch 汇编参考[https://github.com/loongson/la-asm-manual/releases/download/draft/la-asm-manual.pdf](https://github.com/loongson/la-asm-manual/releases/download/draft/la-asm-manual.pdf)
 * QEMU[https://www.qemu.org/](https://www.qemu.org/)
 
-### 使用qemu和gdb调试longarch64程序
+### 使用qemu和gdb调试loongarch64程序
 
 1. 下载`loongarch64-linux-gnu-gdb` [https://github.com/rrwhx/qemu_bin/blob/main/loongarch64-linux-gnu-gdb](https://github.com/rrwhx/qemu_bin/blob/main/loongarch64-linux-gnu-gdb), 也可以自己从源码编译[https://www.gnu.org/software/binutils/](https://www.gnu.org/software/binutils/)
 
