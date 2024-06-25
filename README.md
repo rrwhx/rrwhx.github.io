@@ -120,13 +120,15 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 
 mount -t devtmpfs none /dev
-mount -t proc /proc /proc
+[ -d /dev/pts ] || mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+mount -t proc  none /proc
 mount -t sysfs none /sys
 echo "Hello world"
 ls /dev/
 ls /proc/
 ls /sys/
-setsid cttyhack /bin/ash --login
+setsid busybox cttyhack /bin/ash --login
 poweroff -f
 
 EOF
@@ -134,6 +136,15 @@ EOF
 chmod 777 init
 
 find . | cpio -o -H newc > ~/initrd.cpio
+
+```
+
+```bash
+stty rows 58 cols 213
+export TERM=xterm-256color
+date +%Y%m%d -s "20300101"
+ffmpeg -v 48 -i input.mp4 -c:v rawvideo -pix_fmt bgra -f fbdev /dev/fb0
+mplayer -vo fbdev2 sample.mp4
 
 ```
 
@@ -193,6 +204,13 @@ poweroff -f
 
 ```bash
 ../gcc/configure --enable-languages=c,c++,fortran --disable-bootstrap --prefix=/opt/gcc-latest/
+```
+
+#### binutils-gdb
+
+```bash
+git clone git://sourceware.org/git/binutils-gdb.git
+../binutils-gdb/configure --target=loongarch64-linux-gnu --disable-nls
 ```
 
 #### qemu
@@ -303,6 +321,35 @@ make install
 cd _install
 find . | cpio -o -H newc > ~/la_busybox_musl_softfloat.cpio
 find . | cpio -o -H newc | gzip -9 > ~/la_busybox_musl_softfloat.cpio.gz
+```
+
+####  **build node**
+```bash
+sudo apt-get install python3 g++ make python3-pip
+git clone https://github.com/nodejs/node
+cd node
+./configure --fully-static --openssl-no-asm
+make -j4
+
+./out/Release/node --single-threaded --v8-pool-size=0 ./run.js
+```
+
+####  **build v8**
+```bash
+# https://v8.dev/docs/build
+cd /path/to/v8
+git pull && gclient sync -D
+tools/dev/gm.py x64.release
+
+./out/x64.release/d8 --single-threaded run.js
+```
+
+####  **build jsc**
+```bash
+git clone https://github.com/WebKit/WebKit
+Tools/Scripts/build-jsc --jsc-only --cmakeargs=-DENABLE_STATIC_JSC=ON --build-dir=build_static
+
+jsc --useConcurrentJIT=0 --numberOfWorklistThreads=0 --numberOfFTLCompilerThreads=0 --numberOfDFGCompilerThreads=0 --useWebAssemblyThreading=0 --numberOfWasmCompilerThreads=0 --dumpOptions run.js
 ```
 
 ## Softwares Usage
@@ -448,6 +495,20 @@ guest cmd
 
 `mount -t 9p -o trans=virtio hostshare [mount point] -oversion=9p2000.L`
 
+#### docker
+
+```bash
+docker:
+sudo docker run -it -d ubuntu:22.04
+sudo docker exec -it 1b88b bash
+sudo docker commit 7e26d5b22488 vtop_test:v1.0
+sudo docker save 10f6548ebcc8 > ~/vtop_test.tar
+sudo docker load < ~/vtop_test.tar
+docker rm $(docker ps -a -q)
+# resume stopped container
+docker start container_id
+```
+
 #### misc
 
 ```bash
@@ -472,6 +533,19 @@ sed -i -e '/__MD5__/,+5000d'  your.cfg
 cat .tmux.conf
 set -g mouse on
 bind-key -n C-t new-window
+
+
+sudo /usr/bin/x11vnc -forever -repeat -rfbauth /etc/x11vnc.pwd -rfbport 5900 -geometry 1920x1080 -noxdamage
+
+x11vnc -display :1 -forever -repeat -rfbauth /home/lxy/.vnc/passwd -rfbport 5900 -geometry 1920x1080 -noxdamage
+
+java -XX:ActiveProcessorCount=1
+
+sudo adduser $USER kvm
+
+route add -net 10.208.0.0 netmask 255.255.0.0 gw 192.168.31.1 metric 300 dev wlp9s0
+
+long double 447.dealII HAVE_STD_NUMERIC_LIMITS
 
 ```
 
